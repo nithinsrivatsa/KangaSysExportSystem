@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KangaSys.API", "KangaSys.API\KangaSys.API.csproj", "{8671684C-5B9B-4AF8-96E6-27C1CBEF1054}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KangaSys.Application", "KangaSys.Application\KangaSys.Application.csproj", "{35E7E7AF-B3FA-4A7D-B288-E9FA2CE43C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KangaSys.Domain", "KangaSys.Domain\KangaSys.Domain.csproj", "{2E7C5064-3834-4AD4-A27E-D3964808EE8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KangaSys.Infrastructure", "KangaSys.Infrastructure\KangaSys.Infrastructure.csproj", "{F173153E-3099-43B1-986F-B89EB06FE667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KangaSys.Tests", "KangaSys.Tests\KangaSys.Tests.csproj", "{CF406A5F-7C99-42CC-91F0-00F5C8DC0AB1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8671684C-5B9B-4AF8-96E6-27C1CBEF1054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8671684C-5B9B-4AF8-96E6-27C1CBEF1054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8671684C-5B9B-4AF8-96E6-27C1CBEF1054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8671684C-5B9B-4AF8-96E6-27C1CBEF1054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E7E7AF-B3FA-4A7D-B288-E9FA2CE43C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E7E7AF-B3FA-4A7D-B288-E9FA2CE43C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E7E7AF-B3FA-4A7D-B288-E9FA2CE43C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E7E7AF-B3FA-4A7D-B288-E9FA2CE43C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E7C5064-3834-4AD4-A27E-D3964808EE8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E7C5064-3834-4AD4-A27E-D3964808EE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E7C5064-3834-4AD4-A27E-D3964808EE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E7C5064-3834-4AD4-A27E-D3964808EE8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F173153E-3099-43B1-986F-B89EB06FE667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F173153E-3099-43B1-986F-B89EB06FE667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F173153E-3099-43B1-986F-B89EB06FE667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F173153E-3099-43B1-986F-B89EB06FE667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF406A5F-7C99-42CC-91F0-00F5C8DC0AB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF406A5F-7C99-42CC-91F0-00F5C8DC0AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF406A5F-7C99-42CC-91F0-00F5C8DC0AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF406A5F-7C99-42CC-91F0-00F5C8DC0AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
