@@ -1,44 +1,58 @@
-var builder = WebApplication.CreateBuilder(args);
+// <copyright file="Program.cs" company="KangaSys">
+//   Copyright 2025 KangaSys. All rights reserved
+// </copyright>
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace KangaSys.API
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    using KangaSys.API.Extensions;
+    using KangaSys.API.Middleware;
+    using KangaSys.Application.Interfaces;
+    using KangaSys.Infrastructure.Data;
+    using KangaSys.Infrastructure.Services;
+    using Microsoft.EntityFrameworkCore;
 
-app.UseHttpsRedirection();
+    public class Program
+    {
+        private Program()
+        {
+        }
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+        public static void Main(string[] args)
+        {
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+            var builder = WebApplication.CreateBuilder(args);
 
-app.Run();
+            // Add services to the container.
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddJwtAuthentication(builder.Configuration);
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+            builder.Services.AddScoped<IReportService, ReportService>();
+            builder.Services.AddScoped<CsvExportService>();
+            builder.Services.AddScoped<PdfExportService>();
+            builder.Services.AddScoped<JsonExportService>();
+            builder.Services.AddScoped<IExportServiceFactory, ExportServiceFactory>();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
 }

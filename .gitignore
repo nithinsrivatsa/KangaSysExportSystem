@@ -1,66 +1,53 @@
 # dependencies
-!/node_modules
-/node_modules/*
-!/node_modules/.bdsignore
-frontend/node_modules/
-frontend/coverage/
-frontend/.vscode
-/frontend/package-lock.json
 
-*.vs
-*.npmrc
-*.vscode
-*.vsidx
-build/
-*.log*
-/coverage
-
-/pipelines/.vs
-bundle/nssm/*
-bundle/Frontend/*
-
-/backend/.vs
-/backend/.sonarlint
+/KangaSysExportSystem/.vs
+/KangaSysExportSystem/.sonarlint
 *.dll*
 
-/backend/SMSTool.Core/bin
-/backend/SMSTool.Core/obj
+/KangaSysExportSystem/KangaSys.API/bin
+/KangaSysExportSystem/KangaSys.API/obj
 
-/backend/SMSTool.Core.Tests/bin
-/backend/SMSTool.Core.Tests/obj
+/KangaSysExportSystem/KangaSys.API/appsettings.Development.json
+/KangaSysExportSystem/KangaSys.API/Properties/launchSettings.json
 
-/backend/SMSTool.Core/SMSTool.db
-/backend/SMSTool.Core/SMSTool.db-shm
-/backend/SMSTool.Core/SMSTool.db-wal
-/backend/SMSTool.Core/ExtractedFileForImport
-/backend/.sonarlint/*
+/KangaSysExportSystem/KangaSys.Application/bin
+/KangaSysExportSystem/KangaSys.Application/obj
 
-/installer/SMSTool_Installer/.vs/*
-*.dll*
+/KangaSysExportSystem/KangaSys.Domain/bin
+/KangaSysExportSystem/KangaSys.Domain/obj
 
-/installer/SMSTool_Installer/SMSTool_Installer/bin
-/installer/SMSTool_Installer/SMSTool_Installer/obj
-/installer/SMSTool_Installer/SMSTool_Installer/Bundle
+/KangaSysExportSystem/KangaSys.Infrastructure/bin
+/KangaSysExportSystem/KangaSys.Infrastructure/obj
 
-/dbMigration/.vs
-*.dll*
+/KangaSysExportSystem/KangaSys.Tests/bin
+/KangaSysExportSystem/KangaSys.Tests/obj
 
-/dbMigration/DBMigration/bin
-/dbMigration/DBMigration/obj
-
-/backend/SMSTool.Core.DBMigration/bin
-/backend/SMSTool.Core.DBMigration/obj
-/backend/SMSTool.Core/appsettings.Development.json
-/backend/SMSToolLogs
-
-/backendApi/SMSTool.Core.BackendApi/appsettings.Development.json
-
+# Ignore build outputs
 bin
 obj
+*.exe
+*.dll
+*.pdb
+*.so
+*.dylib
+*.lib
 
-/azurebackend/SMSTool.Core.AzureBackend/bin
-/azurebackend/SMSTool.Core.AzureBackend/obj
+# Ignore Visual Studio and Rider IDE files
+.vs/
+.idea/
+*.user
+*.suo
+*.sln.cache
+*.csproj.user
+
+# Ignore Logs and Debugging Files
+*.log*
+*.nlog
+*.tlog
+*.cache
+*.out
+build/
+/coverage
 
 # dependency file for snapshots related test cases
 __snapshots__/
-.qodo
