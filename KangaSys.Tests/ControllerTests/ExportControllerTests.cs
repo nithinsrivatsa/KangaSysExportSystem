@@ -6,62 +6,50 @@ namespace KangaSys.Tests.ControllerTests
 {
     using KangaSys.API.Controllers;
     using KangaSys.Application.DTOs;
-    using KangaSys.Application.Interfaces;
-    using KangaSys.Domain.Entities;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
+    using KangaSys.API.Command;
 
     public class ExportControllerTests
     {
         [Fact]
         public async Task Export_ReturnsFileContentResult_WithExpectedValues()
         {
-            // Arrange
-            var mockReportService = new Mock<IReportService>();
-            var mockExportServiceFactory = new Mock<IExportServiceFactory>();
-            var mockExportService = new Mock<IExportService>();
+            // Arrange
+            var mockMediator = new Mock<IMediator>();
 
             var request = new ExportRequest
             {
                 Query = new ReportQueryParameters
                 {
-                    // Fill in appropriate properties here
                     FromDate = DateTime.UtcNow.AddDays(-7),
                     ToDate = DateTime.UtcNow
                 },
                 ExportFormat = "CSV"
             };
 
-            var reportData = new List<ClientReportData> { new ClientReportData() };
+            var expectedResponse = new ExportReportResult
+            {
+                FileBytes = new byte[] { 0x01, 0x02, 0x03 },
+                ContentType = "text/csv",
+                FileName = "report.csv"
+            };
 
-            mockReportService.Setup(s => s.GetReportsAsync(It.IsAny<ReportQueryParameters>()))
-             .ReturnsAsync(reportData);
-            var fileBytes = new byte[] { 0x01, 0x02, 0x03 };
-            var contentType = "text/csv";
-            var fileExtension = "csv";
+            mockMediator
+            .Setup(m => m.Send(It.IsAny<ExportReportCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expectedResponse);
 
-            mockReportService.Setup(s => s.GetReportsAsync(request.Query))
-            .ReturnsAsync(reportData);
+            var controller = new ExportController(mockMediator.Object);
 
-            mockExportService.Setup(s => s.ExportAsync(reportData))
-            .ReturnsAsync(fileBytes);
+            // Act
+            var result = await controller.Export(request);
 
-            mockExportService.SetupGet(s => s.ContentType).Returns(contentType);
-            mockExportService.SetupGet(s => s.FileExtension).Returns(fileExtension);
-
-            mockExportServiceFactory.Setup(f => f.GetService(request.ExportFormat))
-            .Returns(mockExportService.Object);
-
-            var controller = new ExportController(mockReportService.Object, mockExportServiceFactory.Object);
-
-            // Act
-            var result = await controller.Export(request);
-
-            // Assert
-            var fileResult = Assert.IsType<FileContentResult>(result);
-            Assert.Equal(fileBytes, fileResult.FileContents);
-            Assert.Equal(contentType, fileResult.ContentType);
-            Assert.EndsWith(".csv", fileResult.FileDownloadName);
+            // Assert
+            var fileResult = Assert.IsType<FileContentResult>(result);
+            Assert.Equal(expectedResponse.FileBytes, fileResult.FileContents);
+            Assert.Equal(expectedResponse.ContentType, fileResult.ContentType);
+            Assert.Equal(expectedResponse.FileName, fileResult.FileDownloadName);
         }
     }
 }

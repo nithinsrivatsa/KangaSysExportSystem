@@ -7,8 +7,10 @@ namespace KangaSys.API
     using KangaSys.API.Extensions;
     using KangaSys.API.Middleware;
     using KangaSys.Application.Interfaces;
+    using KangaSys.Application.Queries;
     using KangaSys.Infrastructure.Data;
     using KangaSys.Infrastructure.Services;
+    using MediatR;
     using Microsoft.EntityFrameworkCore;
 
     public class Program
@@ -36,6 +38,8 @@ namespace KangaSys.API
             builder.Services.AddScoped<PdfExportService>();
             builder.Services.AddScoped<JsonExportService>();
             builder.Services.AddScoped<IExportServiceFactory, ExportServiceFactory>();
+
+            builder.Services.AddMediatR(typeof(ExportReportHandler).Assembly);
 
             var app = builder.Build();
 

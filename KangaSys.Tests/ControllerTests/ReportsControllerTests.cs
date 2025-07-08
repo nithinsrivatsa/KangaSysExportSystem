@@ -5,19 +5,20 @@
 namespace KangaSys.Tests.ControllerTests
 {
     using KangaSys.API.Controllers;
+    using KangaSys.Application.Command;
     using KangaSys.Application.DTOs;
-    using KangaSys.Application.Interfaces;
-    using KangaSys.Domain.Entities;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
 
     public class ReportsControllerTests
     {
+
         [Fact]
         public async Task Get_ReturnsOkResult_WithExpectedData()
         {
             // Arrange
-            var mockReportService = new Mock<IReportService>();
+            var mockMediator = new Mock<IMediator>();
 
             var parameters = new ReportQueryParameters
             {
@@ -25,24 +26,30 @@ namespace KangaSys.Tests.ControllerTests
                 ToDate = DateTime.UtcNow
             };
 
-            var expectedReports = new List<ClientReportData>
+            var expectedReports = new PaginatedResult<ClientReportDto>
             {
-                new ClientReportData { ClientId = "Client A", Revenue = 100 },
-                new ClientReportData { ClientId = "Client B", Revenue = 200 }
+                Items = new List<ClientReportDto>
+                 {
+                 new ClientReportDto { ClientId = "Client A", Revenue = 100 },
+                 new ClientReportDto { ClientId = "Client B", Revenue = 200 }
+                 },
+                TotalCount = 2
             };
 
-            mockReportService.Setup(s => s.GetReportsAsync(parameters))
+            mockMediator
+            .Setup(m => m.Send(It.IsAny<GetReportsQuery>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(expectedReports);
 
-            var controller = new ReportsController(mockReportService.Object);
+            var controller = new ReportsController(mockMediator.Object);
 
             // Act
             var result = await controller.Get(parameters);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var actualReports = Assert.IsAssignableFrom<IEnumerable<ClientReportData>>(okResult.Value);
-            Assert.Equal(expectedReports, actualReports);
+            var actualReports = Assert.IsType<PaginatedResult<ClientReportDto>>(okResult.Value);
+            Assert.Equal(expectedReports.TotalCount, actualReports.TotalCount);
+            Assert.Equal(expectedReports.Items.Count, actualReports.Items.Count);
         }
     }
 }

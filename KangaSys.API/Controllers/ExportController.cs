@@ -4,33 +4,28 @@
 
 namespace KangaSys.API.Controllers
 {
+    using KangaSys.API.Command;
     using KangaSys.Application.DTOs;
-    using KangaSys.Application.Interfaces;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
     [Route("api/[controller]")]
     public class ExportController : ControllerBase
     {
-        private readonly IReportService _reportService;
-        private readonly IExportServiceFactory _factory;
 
-        public ExportController(IReportService reportService, IExportServiceFactory factory)
+        private readonly IMediator _mediator;
+
+        public ExportController(IMediator mediator)
         {
-            _reportService = reportService;
-            _factory = factory;
+            _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Export([FromBody] ExportRequest request)
         {
-            var data = await _reportService.GetReportsAsync(request.Query);
-            var service = _factory.GetService(request.ExportFormat);
-
-            var fileBytes = await service.ExportAsync(data);
-            var fileName = $"Report_{DateTime.UtcNow:yyyyMMddHHmmss}.{service.FileExtension}";
-
-            return File(fileBytes, service.ContentType, fileName);
+            var result = await _mediator.Send(new ExportReportCommand(request));
+            return File(result.FileBytes, result.ContentType, result.FileName);
         }
     }
 }

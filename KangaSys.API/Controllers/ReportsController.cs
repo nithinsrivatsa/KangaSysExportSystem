@@ -4,8 +4,10 @@
 
 namespace KangaSys.API.Controllers
 {
+    using KangaSys.Application.Command;
     using KangaSys.Application.DTOs;
     using KangaSys.Application.Interfaces;
+    using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -14,18 +16,19 @@ namespace KangaSys.API.Controllers
     [Route("api/[controller]")]
     public class ReportsController : ControllerBase
     {
-        private readonly IReportService _reportService;
+        private readonly IMediator _mediator;
 
-        public ReportsController(IReportService reportService)
+        public ReportsController(IMediator mediator)
         {
-            _reportService = reportService;
+            _mediator = mediator;
         }
+
 
         [HttpGet("query")]
         public async Task<IActionResult> Get([FromQuery] ReportQueryParameters parameters)
         {
-            var results = await _reportService.GetReportsAsync(parameters);
-            return Ok(results);
+            var result = await _mediator.Send(new GetReportsQuery(parameters));
+            return Ok(result);
         }
     }
 }
