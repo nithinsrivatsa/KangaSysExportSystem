@@ -13,7 +13,9 @@
 - **Database**: Central store for user/report data.
 - **Export Engine**: Generates file outputs in requested formats.
 - **Output Files**: Exports are saved as `.csv`, `.json`, `.pdf`.
-![alt text](<image (1) (1)-1.png>)
+  
+![image (1) (1)](https://github.com/user-attachments/assets/e79a377a-1c25-4aae-bcd7-b6842b57c154)
+
 ---
 
 ## 🔁 Data Flow
@@ -21,6 +23,8 @@
 ```text
 Client --> API (Auth / Export / Reports) --> Application Services --> Database --> Export Engine --> Output Files
 ```
+
+![image (2) (1)](https://github.com/user-attachments/assets/c2fbe6fe-b4dc-49bf-8b8f-73f29f26b542)
 
 ---
 
