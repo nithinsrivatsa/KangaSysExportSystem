@@ -51,12 +51,17 @@ We need to provide actual user credentials to genarate the token.
 }
 ```
 - **Response:** File download (CSV, JSON, or PDF)
+---
 
 Sample PDF Output:
-![alt text](image-1.png)
+
+![image-1](https://github.com/user-attachments/assets/179b5dab-f392-48fd-90e5-2fa29ee78273)
+
 
 Sample CSV Output:
-![alt text](image-2.png)
+
+![image-2](https://github.com/user-attachments/assets/463c16ac-f231-4f00-a51a-bb43e832b32d)
+
 ---
 
 ## 📄 Get Report
